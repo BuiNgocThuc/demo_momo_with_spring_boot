@@ -1,0 +1,141 @@
+@import url('https://fonts.googleapis.com/css2?family=Kanit:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+	:root {
+		--background: 0 0% 100%;
+		--foreground: 0 0% 5%;
+
+		--card: 0 0% 99%;
+		--card-foreground: 0 0% 5%;
+
+		--popover: 0 0% 99%;
+		--popover-foreground: 0 0% 5%;
+
+		--primary: 36 100% 50%;
+		--primary-foreground: 0 0% 2%;
+
+		--secondary: 0 0% 95%;
+		--secondary-foreground: 0 0% 5%;
+
+		--muted: 0 0% 95%;
+		--muted-foreground: 0 0% 45%;
+
+		--accent: 0 0% 95%;
+		--accent-foreground: 0 0% 5%;
+
+		--destructive: 0 84% 60%;
+		--destructive-foreground: 0 0% 98%;
+
+		--border: 0 0% 91%;
+		--input: 0 0% 84%;
+		--ring: 0 0% 76%;
+
+		--radius: 0.5rem;
+
+		--success: 143 85% 96%;
+		--success-border: 145 92% 91%;
+		--success-foreground: 140 100% 27%;
+
+		--warning: 50 75% 92%;
+		--warning-border: 49 91% 91%;
+		--warning-foreground: 31 92% 45%;
+
+		--error: 359 100% 97%;
+		--error-border: 359 100% 94%;
+		--error-foreground: 360 100% 45%;
+
+		--info: 210 100% 97%;
+		--info-border: 221 91% 91%;
+		--info-foreground: 210 92% 45%;
+
+	}
+
+	.dark {
+		--background: 0 3% 6%;
+		--foreground: 0 0% 98%;
+
+		--card: 60 6% 7%;
+		--card-foreground: 0 0% 98%;
+
+		--popover: 60 6% 7%;
+		--popover-foreground: 0 0% 98%;
+
+		--primary: 36 100% 50%;
+		--primary-foreground: 0 0% 2%;
+
+		--secondary: 30 5% 15%;
+		--secondary-foreground: 0 0% 98%;
+
+		--muted: 40 5% 22%;
+		--muted-foreground: 35 5% 49%;
+
+		--accent: 36 45% 14%;
+		--accent-foreground: 0 0% 98%;
+
+		--destructive: 0 84% 60%;
+		--destructive-foreground: 0 0% 98%;
+
+		--border: 40 5% 12%;
+		--input: 30 4% 18%;
+		--ring: 36 100% 40%;
+	}
+}
+
+@layer base {
+	* {
+		@apply border-border;
+	}
+
+	body {
+		@apply bg-background text-foreground;
+	}
+}
+
+::-webkit-scrollbar {
+	width: 14px;
+}
+
+::-webkit-scrollbar-thumb {
+	border: 4px solid rgba(0, 0, 0, 0);
+	background-clip: padding-box;
+	border-radius: 9999px;
+	background-color: #AAAAAA;
+}
+
+.sidebar::-webkit-scrollbar {
+	display: none;
+}
+
+/* Hide scrollbar for IE, Edge and Firefox */
+.sidebar {
+	-ms-overflow-style: none; /* IE and Edge */
+	scrollbar-width: none; /* Firefox */
+}
+
+.poppins-regular {
+  font-family: "Poppins", serif;
+  font-weight: 400;
+  font-style: normal;
+}
+
+.poppins-medium {
+  font-family: "Poppins", serif;
+  font-weight: 500;
+  font-style: normal;
+}
+
+.poppins-semibold {
+  font-family: "Poppins", serif;
+  font-weight: 600;
+  font-style: normal;
+}
+
+.poppins-bold {
+  font-family: "Poppins", serif;
+  font-weight: 700;
+  font-style: normal;
+}

@@ -1,0 +1,18 @@
+#reader__scan_region {
+	display: flex;
+	justify-content: center;
+}
+#reader__dashboard_section {
+	display: flex;
+	flex-direction: column;
+	gap: 16px;
+	font-weight: 500;
+}
+.html5-qrcode-element{
+	padding: 4px 8px;
+	border: 1px solid rgba(27, 31, 35, 0.15);
+	border-radius: 8px;
+	color: #24292E;
+	box-shadow: rgba(27, 31, 35, 0.04) 0 1px 0, rgba(255, 255, 255, 0.25) 0 1px 0 inset;
+	background-color: #FAFBFC;
+}
