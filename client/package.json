@@ -1,5 +1,5 @@
 {
-  "name": "zity-web",
+  "name": "client",
   "private": true,
   "version": "0.0.0",
   "type": "module",
@@ -32,8 +32,6 @@
     "class-variance-authority": "^0.7.0",
     "clsx": "^2.1.1",
     "date-fns": "^3.6.0",
-    "firebase": "^10.13.1",
-    "html5-qrcode": "^2.3.3",
     "lucide-react": "^0.439.0",
     "next-themes": "^0.3.0",
     "react": "^18.3.1",
@@ -47,7 +45,6 @@
     "tailwindcss-animate": "^1.0.7",
     "universal-cookie": "^7.2.0",
     "usehooks-ts": "^3.1.0",
-    "zity-web": "file:",
     "zod": "^3.23.8"
   },
   "devDependencies": {
