@@ -14,12 +14,26 @@ import lombok.experimental.FieldDefaults;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
 @RequestMapping("/bills")
 @RequiredArgsConstructor
 @FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)
 public class BillController {
         BillService billService;
+
+        // get all
+        @GetMapping
+        public List<BillResponse> getAllBills() {
+                return billService.getAllBills();
+        }
+
+        // get by id
+        @GetMapping("/{id}")
+        public BillResponse getBillById(@PathVariable Integer id) {
+                return billService.getBillById(id);
+        }
 
         // create
         @PostMapping
@@ -29,25 +43,27 @@ public class BillController {
 
         // update
         @PutMapping("/{id}")
-        BillResponse updateBill(@PathVariable Long id, @RequestBody BillUpdateRequest request) {
+        BillResponse updateBill(@PathVariable Integer id, @RequestBody BillUpdateRequest request) {
                 return billService.updateBill(id, request);
         }
 
         // patch
         @PatchMapping("/{id}")
-        BillResponse patchBill(@PathVariable Long id, @RequestBody BillPatchRequest request) {
+        BillResponse patchBill(@PathVariable Integer id, @RequestBody BillPatchRequest request) {
                 return billService.patchBill(id, request);
         }
 
         @PostMapping("/{id}/payment/momo")
-        public ResponseEntity<MomoCreatePaymentDTO> createPaymentMomo(@PathVariable long id, @RequestBody MomoRequestCreatePaymentDTO request) {
+        public ResponseEntity<MomoCreatePaymentDTO> createPaymentMomo(@PathVariable Integer id, @RequestBody MomoRequestCreatePaymentDTO request) {
                 MomoCreatePaymentDTO payment = billService.createPaymentMomo(id, request);
-                return ResponseEntity.ok(payment);
+                return ResponseEntity.ok(payment); // Returns a 200 OK response with the payment details.
         }
 
         @PostMapping("/{id}/momo-callback")
-        public ResponseEntity<Void> handleMomoCallBack(@PathVariable long id, @RequestBody MomoCallbackDTO callbackDto) {
+        public ResponseEntity<Void> handleMomoCallBack(@PathVariable Integer id, @RequestBody MomoCallbackDTO callbackDto) {
+                System.out.println("Handling Momo callback 1...");
                 billService.handleMomoCallBack(id, callbackDto);
+                System.out.println("Handling Momo callback 2...");
                 return ResponseEntity.noContent().build();
         }
 }

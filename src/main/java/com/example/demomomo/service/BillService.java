@@ -14,17 +14,20 @@ import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 @RequiredArgsConstructor
 @FieldDefaults(level = lombok.AccessLevel.PRIVATE, makeFinal = true)
 public class BillService {
-
         BillRepository billRepository;
         MomoService momoService;
         private final BillMapper billMapper;
 
-        public MomoCreatePaymentDTO createPaymentMomo(long id, MomoRequestCreatePaymentDTO request) {
+        // create payment momo
+        public MomoCreatePaymentDTO createPaymentMomo(Integer id, MomoRequestCreatePaymentDTO request) {
                 Bill bill = billRepository.findById(id).orElseThrow(() -> new RuntimeException("Bill not found"));
+                System.out.println(bill.toString());
                 try {
                         return momoService.createPayment(bill, request);
                 } catch (Exception e) {
@@ -32,7 +35,8 @@ public class BillService {
                 }
         }
 
-        public void handleMomoCallBack(long id, MomoCallbackDTO callbackDto) {
+        // handle momo callback
+        public void handleMomoCallBack(Integer id, MomoCallbackDTO callbackDto) {
                 if (callbackDto.getResultCode() == 0) {
                         Bill bill = billRepository.findById(id).orElse(null);
                         if (bill != null) {
@@ -42,13 +46,26 @@ public class BillService {
                 }
         }
 
+        // get all bills
+        public List<BillResponse> getAllBills() {
+                return billRepository.findAll().stream()
+                                .map(billMapper::entityToResponse).toList();
+        }
+
+        // get bill by id
+        public BillResponse getBillById(Integer id) {
+                return billRepository.findById(id)
+                                .map(billMapper::entityToResponse)
+                                .orElseThrow(() -> new RuntimeException("Bill Not Found"));
+        }
+
         public BillResponse createBill(BillCreationRequest request) {
                 Bill bill = billMapper.creationRequestToEntity(request);
 
                 return billMapper.entityToResponse(billRepository.save(bill));
         }
 
-        public BillResponse updateBill(Long id, BillUpdateRequest request) {
+        public BillResponse updateBill(Integer id, BillUpdateRequest request) {
                 Bill bill = billRepository.findById(id)
                                 .orElseThrow(() -> new RuntimeException("Bill Not Found"));
 
@@ -56,7 +73,7 @@ public class BillService {
                 return billMapper.entityToResponse(billRepository.save(bill));
         }
 
-        public BillResponse patchBill(Long id, BillPatchRequest request) {
+        public BillResponse patchBill(Integer id, BillPatchRequest request) {
                 Bill bill = billRepository.findById(id)
                                 .orElseThrow(() -> new RuntimeException("Bill Not Found"));
 

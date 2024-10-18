@@ -29,5 +29,4 @@ public class BillResponse {
 
         LocalDateTime updatedAt;
 
-        Integer relationshipId;
 }

@@ -13,3 +13,11 @@ spring:
                 hibernate:
                         ddl-auto: update
                 show-sql: true
+
+momo:
+        momoApiUrl: "https://test-payment.momo.vn/v2/gateway/api/create"
+        secretKey: "K951B6PE1waDMi640xX08PD3vg6EkVlz"
+        accessKey: "F8BBA842ECF85"
+        returnUrl: "https://localhost:5001/Home/PaymentCallBack"
+        notifyUrl: "https://c4a5-125-235-239-167.ngrok-free.app/demoMoMo/bills/{{id}}/momo-callback"
+        partnerCode: "MOMO"

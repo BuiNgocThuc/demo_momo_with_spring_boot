@@ -23,5 +23,4 @@ public class BillCreationRequest {
 
         String status;
 
-        Integer relationshipId;
 }

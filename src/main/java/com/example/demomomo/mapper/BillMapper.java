@@ -7,17 +7,14 @@ import com.example.demomomo.dto.bill.BillUpdateRequest;
 import com.example.demomomo.entity.Bill;
 import org.mapstruct.BeanMapping;
 import org.mapstruct.Mapper;
-import org.mapstruct.Mapping;
 import org.mapstruct.MappingTarget;
 
-@Mapper
+@Mapper(componentModel = "spring")
 public interface BillMapper {
         // mapping creation request to entity
-        @Mapping(target = "relationship", ignore = true)
         Bill creationRequestToEntity(BillCreationRequest request);
 
         // mapping update request to entity
-        @Mapping(target = "relationship", ignore = true)
         void updateRequestToEntity(@MappingTarget Bill bill, BillUpdateRequest request);
 
         // mapping patch request to entity
@@ -25,7 +22,6 @@ public interface BillMapper {
         void patchRequestToEntity(@MappingTarget Bill bill, BillPatchRequest request);
 
         // mapping entity to response
-        @Mapping(source = "relationship.id", target = "relationshipId")
         BillResponse entityToResponse(Bill bill);
 
 }
