@@ -2,7 +2,6 @@ import { Document, Page, Text, View, Image } from '@react-pdf/renderer'
 import Logo from '@assets/logo.jpg'
 import { formatDateWithSlash, generateInvoiceNumber } from '@/utils/Generate'
 import { BILL_STYLES } from '@/constant/css/Bill'
-import QrGetMoney from '@assets/qeGetMoney.jpg'
 const BillDetail = ({ id }: { id: number }) => {
   return (
     <>
