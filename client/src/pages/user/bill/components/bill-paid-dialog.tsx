@@ -66,7 +66,7 @@ const BillPaidDialog = ({ children, id }: BillPaidDialogProps) => {
       } else if (data.name === 'MOMO') {
         await usePaidByMomo({
           id: id,
-          body: { RequestType: data.requestType },
+          body: { requestType: data.requestType },
         })
           .unwrap()
           .then((payload: any) => {

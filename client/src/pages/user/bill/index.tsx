@@ -16,6 +16,7 @@ const Index = () => {
   const params = useParams()
   const { width = 0 } = useWindowSize()
   const { data: bills, isLoading, isFetching } = useGetBillsQuery(1)
+  console.log('bills', bills)
   return (
     <div className="w-full sm:h-screen flex flex-col bg-zinc-100 overflow-hidden">
       <BreadCrumb
@@ -69,7 +70,7 @@ const Index = () => {
                       <UserBillSkeleton key={index} />
                     ))
                   ) : (
-                    <BillList bills={bills?.contents} />
+                    <BillList bills={bills} />
                   )}
                   {/* <PaginationCustom
                     currentPage={bills?.page}
