@@ -36,7 +36,6 @@ public class BillService {
         // create payment momo
         public MomoCreatePaymentDTO createPaymentMomo(Integer id, MomoRequestCreatePaymentDTO request) {
                 Bill bill = billRepository.findById(id).orElseThrow(() -> new RuntimeException("Bill not found"));
-                System.out.println(bill.toString());
                 try {
                         return momoService.createPayment(bill, request);
                 } catch (Exception e) {
@@ -46,7 +45,6 @@ public class BillService {
 
         // handle momo callback
         public void handleMomoCallBack(Integer id, MomoCallbackDTO callbackDto) {
-                System.out.println("Handling Momo callback 1...");
 
                 // First, generate the signature to compare
                 String rawData = String.format("accessKey=%s&amount=%.0f&extraData=%s&message=%s&orderId=%s" +

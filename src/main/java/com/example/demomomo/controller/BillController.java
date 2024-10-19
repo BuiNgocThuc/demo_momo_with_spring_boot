@@ -61,9 +61,7 @@ public class BillController {
 
         @PostMapping("/{id}/momo-callback")
         public ResponseEntity<Void> handleMomoCallBack(@PathVariable Integer id, @RequestBody MomoCallbackDTO callbackDto) {
-                System.out.println("Handling Momo callback 1...");
                 billService.handleMomoCallBack(id, callbackDto);
-                System.out.println("Handling Momo callback 2...");
                 return ResponseEntity.noContent().build();
         }
 }

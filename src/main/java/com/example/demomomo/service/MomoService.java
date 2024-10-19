@@ -30,7 +30,6 @@ public class MomoService {
         CreateSignature createSignature;
 
         public MomoCreatePaymentDTO createPayment(Bill bill, MomoRequestCreatePaymentDTO request) throws Exception {
-                System.out.println("Creating Momo payment...");
 
                 String billInfo = "Payment for the bill " + bill.getMonthly();
                 String requestId = UUID.randomUUID().toString();
@@ -82,7 +81,6 @@ public class MomoService {
                 // Create the HTTP entity with the request data and headers
                 HttpEntity<PaymentRequestData> httpEntity = new HttpEntity<>(requestData, headers);
 
-                System.out.println(momoSettings.getNotifyUrl());
                 try {
                         // Make the HTTP POST request to the Momo API and capture the response
                         ResponseEntity<MomoCreatePaymentDTO> response = restTemplate.exchange(
