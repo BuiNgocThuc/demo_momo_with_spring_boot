@@ -129,7 +129,6 @@ const Header = () => {
   ]
 
   useEffect(() => {
-    console.log(width)
     if (width >= 1024) {
       setPanelRightOpen(false)
     }

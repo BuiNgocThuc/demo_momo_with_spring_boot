@@ -8,7 +8,7 @@ interface BillItemProps {
 
 const BillItem = ({ bill }: BillItemProps) => {
   const navigate = useNavigate()
-	const params = useParams()
+  const params = useParams()
   return (
     <div
       onClick={() => navigate(`/bills/${bill.id}`)}
@@ -45,14 +45,14 @@ const BillItem = ({ bill }: BillItemProps) => {
       />
       <div className="w-full flex justify-end py-2 px-4">
         <span
-          className={`text-lg ${
-            bill.status === 'UNPAID'
+          className={`text-lg uppercase ${
+            bill.status.toUpperCase() === 'UNPAID'
               ? 'text-red-600'
-              : bill.status === 'PAID'
+              : bill.status.toUpperCase() === 'PAID'
               ? 'text-green-600'
               : 'text-yellow-600'
           } font-medium`}>
-          {bill.status}
+          {bill.status.toUpperCase()}
         </span>
       </div>
     </div>

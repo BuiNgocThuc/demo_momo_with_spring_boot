@@ -6,17 +6,21 @@ import { Download, Search } from 'lucide-react'
 import BreadCrumb from '@/components/breadcrumb'
 import { PDFDownloadLink, PDFViewer } from '@react-pdf/renderer'
 import BillDetail from './components/bill-detail'
-import { Separator } from '@/components/ui/separator'
 import { Button } from '@/components/ui/button'
 import BillPaidDialog from './components/bill-paid-dialog'
-import { useGetBillsQuery } from '@/features/bill/billSlice'
+import { useGetBillQuery, useGetBillsQuery } from '@/features/bill/billSlice'
 import UserBillSkeleton from '@/components/skeleton/UserBillSkeleton'
+import { Skeleton } from '@/components/ui/skeleton'
 const Index = () => {
   useDocumentTitle('Bill')
   const params = useParams()
   const { width = 0 } = useWindowSize()
   const { data: bills, isLoading, isFetching } = useGetBillsQuery(1)
-  console.log('bills', bills)
+  const {
+    data: bill,
+    isLoading: isLoadingBill,
+    isFetching: isFetchingBill,
+  } = useGetBillQuery(params.id, { skip: !params.id })
   return (
     <div className="w-full sm:h-screen flex flex-col bg-zinc-100 overflow-hidden">
       <BreadCrumb
@@ -33,14 +37,20 @@ const Index = () => {
                 <div className="w-full h-14 bg-success flex justify-between items-center rounded-b-md p-4">
                   <p className="font-medium">Bill-{params.id}.pdf</p>
                   <div className="flex gap-4 items-center">
-                    <BillPaidDialog id={params.id}>
-                      <Button
-                        value={'default'}
-                        type="button"
-                        className="text-white">
-                        Paid now
-                      </Button>
-                    </BillPaidDialog>
+                    {isLoadingBill || isFetchingBill ? (
+                      <Skeleton className="w-20 h-10 bg-zinc-100"></Skeleton>
+                    ) : (
+                      bill?.status.toLocaleUpperCase() != 'PAID' && (
+                        <BillPaidDialog id={params.id}>
+                          <Button
+                            value={'default'}
+                            type="button"
+                            className="text-white">
+                            Paid now
+                          </Button>
+                        </BillPaidDialog>
+                      )
+                    )}
                     <PDFDownloadLink
                       document={<BillDetail id={parseInt(params.id)} />}
                       fileName={`Bill-${params.id}.pdf`}>
@@ -53,7 +63,6 @@ const Index = () => {
                 <PDFViewer className="size-full">
                   <BillDetail id={parseInt(params.id)} />
                 </PDFViewer>
-                <Separator />
               </div>
             ) : (
               <>
@@ -83,22 +92,24 @@ const Index = () => {
           </div>
         </div>
         {params.id && width > 1024 && (
-          <div className="size-full p-4 bg-white rounded-md lg:flex hidden overflow-hidden flex-col">
-            <PDFViewer className="size-full">
-              <BillDetail id={parseInt(params.id)} />
-            </PDFViewer>
-            <Separator />
-            <div className="w-full h-14 bg-success flex justify-between items-center rounded-b-md p-4 relative">
+          <div className="size-full bg-white rounded-md flex overflow-hidden flex-col p-4">
+            <div className="w-full h-14 bg-success flex justify-between items-center rounded-b-md p-4">
               <p className="font-medium">Bill-{params.id}.pdf</p>
               <div className="flex gap-4 items-center">
-                <BillPaidDialog id={params.id}>
-                  <Button
-                    value={'default'}
-                    type="button"
-                    className="text-white">
-                    Paid now
-                  </Button>
-                </BillPaidDialog>
+                {isLoadingBill || isFetchingBill ? (
+                  <Skeleton className="w-20 h-10 bg-zinc-100"></Skeleton>
+                ) : (
+                  bill?.status.toLocaleUpperCase() != 'PAID' && (
+                    <BillPaidDialog id={params.id}>
+                      <Button
+                        value={'default'}
+                        type="button"
+                        className="text-white">
+                        Paid now
+                      </Button>
+                    </BillPaidDialog>
+                  )
+                )}
                 <PDFDownloadLink
                   document={<BillDetail id={parseInt(params.id)} />}
                   fileName={`Bill-${params.id}.pdf`}>
@@ -108,6 +119,9 @@ const Index = () => {
                 </PDFDownloadLink>
               </div>
             </div>
+            <PDFViewer className="size-full">
+              <BillDetail id={parseInt(params.id)} />
+            </PDFViewer>
           </div>
         )}
       </div>

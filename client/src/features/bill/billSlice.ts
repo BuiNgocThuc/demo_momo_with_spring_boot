@@ -3,14 +3,14 @@ import { apiSlice } from '../api/apiSlice'
 
 export const billSlice = apiSlice.injectEndpoints({
   endpoints: (builder) => ({
-    getBills: builder.query<ResponseDataType<Bill>, number | void>({
+    getBills: builder.query<Bill[], number | void>({
       query: (page = 1) => {
         return {
           url: `bills?page=${page}`,
-        };
+        }
       },
     }),
-    getBill: builder.query<Bill, string>({
+    getBill: builder.query<Bill, string | undefined>({
       query: (id: string) => ({
         url: `bills/${id}`,
         method: 'GET',
