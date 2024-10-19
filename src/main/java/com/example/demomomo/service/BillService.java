@@ -1,5 +1,7 @@
 package com.example.demomomo.service;
 
+import com.example.demomomo.configuration.MomoSettings;
+import com.example.demomomo.dto.ExtraData;
 import com.example.demomomo.dto.MomoCallbackDTO;
 import com.example.demomomo.dto.MomoCreatePaymentDTO;
 import com.example.demomomo.dto.MomoRequestCreatePaymentDTO;
@@ -10,10 +12,14 @@ import com.example.demomomo.dto.bill.BillUpdateRequest;
 import com.example.demomomo.entity.Bill;
 import com.example.demomomo.mapper.BillMapper;
 import com.example.demomomo.repository.BillRepository;
+import com.example.demomomo.utils.CreateSignature;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
 import org.springframework.stereotype.Service;
 
+import java.util.Base64;
 import java.util.List;
 
 @Service
@@ -22,7 +28,10 @@ import java.util.List;
 public class BillService {
         BillRepository billRepository;
         MomoService momoService;
-        private final BillMapper billMapper;
+        BillMapper billMapper;
+        MomoSettings momoSettings;
+        CreateSignature createSignature;
+        ObjectMapper objectMapper;
 
         // create payment momo
         public MomoCreatePaymentDTO createPaymentMomo(Integer id, MomoRequestCreatePaymentDTO request) {
@@ -37,12 +46,45 @@ public class BillService {
 
         // handle momo callback
         public void handleMomoCallBack(Integer id, MomoCallbackDTO callbackDto) {
-                if (callbackDto.getResultCode() == 0) {
+                System.out.println("Handling Momo callback 1...");
+
+                // First, generate the signature to compare
+                String rawData = String.format("accessKey=%s&amount=%.0f&extraData=%s&message=%s&orderId=%s" +
+                                        "&orderInfo=%s&orderType=%s&partnerCode=%s&payType=%s&requestId=%s" +
+                                        "&responseTime=%d&resultCode=%d&transId=%d",
+                                momoSettings.getAccessKey(),
+                                callbackDto.getAmount(),
+                                callbackDto.getExtraData(),
+                                callbackDto.getMessage(),
+                                callbackDto.getOrderId(),
+                                callbackDto.getOrderInfo(),
+                                callbackDto.getOrderType(),
+                                callbackDto.getPartnerCode(),
+                                callbackDto.getPayType(),
+                                callbackDto.getRequestId(),
+                                callbackDto.getResponseTime(),
+                                callbackDto.getResultCode(),
+                                callbackDto.getTransId());
+
+                // Create the expected signature from the rawData
+                String expectedSignature = null;
+                try {
+                        expectedSignature = createSignature.computeHmacSha256(rawData, momoSettings.getSecretKey());
+                } catch (Exception e) {
+                        throw new RuntimeException(e);
+                }
+
+                // Compare the received signature with the expected signature
+                if (callbackDto.getSignature().equals(expectedSignature) && callbackDto.getResultCode() == 0) {
+                        // Proceed with processing the payment
                         Bill bill = billRepository.findById(id).orElse(null);
                         if (bill != null) {
                                 bill.setStatus("Paid");
-                                billRepository.save(bill); // Assuming this saves the updated bill
+                                billRepository.save(bill); // Save the updated bill
                         }
+                } else {
+                        // Handle signature mismatch or other issues
+                        System.out.println("Signature mismatch or unsuccessful result code.");
                 }
         }
 

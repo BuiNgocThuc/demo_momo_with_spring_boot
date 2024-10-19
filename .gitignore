@@ -32,7 +32,7 @@ build/
 ### VS Code ###
 .vscode/
 
-momo.yaml
+application.yaml
 
 
 # Client Ignore
