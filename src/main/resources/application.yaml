@@ -19,5 +19,5 @@ momo:
         secretKey: "K951B6PE1waDMi640xX08PD3vg6EkVlz"
         accessKey: "F8BBA842ECF85"
         returnUrl: "http://localhost:5173/payment"
-        notifyUrl: "https://e581-2405-4802-80e5-f930-6165-c94d-3821-aa0a.ngrok-free.app/demoMoMo/bills/{{id}}/momo-callback"
+        notifyUrl: "https://7ca6-103-249-23-27.ngrok-free.app/demoMoMo/bills/{{id}}/momo-callback"
         partnerCode: "MOMO"
