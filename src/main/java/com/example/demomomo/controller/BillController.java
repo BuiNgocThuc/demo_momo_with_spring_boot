@@ -55,10 +55,9 @@ public class BillController {
 
         @PostMapping("/{id}/payment/momo")
         public ResponseEntity<MomoCreatePaymentDTO> createPaymentMomo(@PathVariable Integer id, @RequestBody MomoRequestCreatePaymentDTO request) {
-                MomoCreatePaymentDTO payment = rvice.createPaymentMomo(id, request);
+                MomoCreatePaymentDTO payment = billService.createPaymentMomo(id, request);
                 return ResponseEntity.ok(payment); // Returns a 200 OK response with the payment details.
         }
-                
         @PostMapping("/{id}/momo-callback")
         public ResponseEntity<Void> handleMomoCallBack(@PathVariable Integer id, @RequestBody MomoCallbackDTO callbackDto) {
                 billService.handleMomoCallBack(id, callbackDto);
