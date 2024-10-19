@@ -72,14 +72,6 @@ const MomoPaymentSuccess = () => {
             <Separator className="my-2" />
             <div className="w-full grid grid-cols-2 gap-y-4">
               <div className="text-[#4B4E52] text-left text-sm">
-                Beneficiary name
-              </div>
-              <div className="text-right poppins-medium">ZTech Apartment</div>
-              <div className="text-[#4B4E52] text-left text-sm">
-                Beneficiary account
-              </div>
-              <div className="text-right poppins-medium">123456789101</div>
-              <div className="text-[#4B4E52] text-left text-sm">
                 Transaction ID
               </div>
               <div className="text-right poppins-medium">{transId}</div>
@@ -106,7 +98,7 @@ const MomoPaymentSuccess = () => {
           <div className="w-full h-full flex items-end">
             <Button
               onClick={() => {
-                window.open(import.meta.env.VITE_CLIENT_URL)
+                window.open(import.meta.env.VITE_CLIENT_URL, '_self')
               }}
               size={'lg'}
               className="text-white w-full">

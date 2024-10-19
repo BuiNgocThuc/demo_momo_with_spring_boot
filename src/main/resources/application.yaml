@@ -7,7 +7,7 @@ spring:
         datasource:
                 url: "jdbc:mysql://localhost:3306/momoDb"
                 username: root
-                password: root
+                password: Admin@123
                 driver-class-name: com.mysql.cj.jdbc.Driver
         jpa:
                 hibernate:
@@ -18,6 +18,6 @@ momo:
         momoApiUrl: "https://test-payment.momo.vn/v2/gateway/api/create"
         secretKey: "K951B6PE1waDMi640xX08PD3vg6EkVlz"
         accessKey: "F8BBA842ECF85"
-        returnUrl: "https://localhost:5001/Home/PaymentCallBack"
-        notifyUrl: " https://dbab-125-235-239-167.ngrok-free.app/demoMoMo/bills/{{id}}/momo-callback"
+        returnUrl: "http://localhost:5173/payment"
+        notifyUrl: "https://e581-2405-4802-80e5-f930-6165-c94d-3821-aa0a.ngrok-free.app/demoMoMo/bills/{{id}}/momo-callback"
         partnerCode: "MOMO"
